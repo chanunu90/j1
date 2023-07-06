@@ -14,6 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Commit;
 import org.zerock.j1.domain.Board;
+import org.zerock.j1.dto.BoardListRcntDTO;
+import org.zerock.j1.dto.PageRequestDTO;
+import org.zerock.j1.dto.PageResponseDTO;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
@@ -176,7 +179,7 @@ public class BoardRepositoryTests {
 
         Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
 
-        Page<Board> result =  boardRepository.search1( "tcw" , "1"  , pageable);
+        Page<Board> result =  boardRepository.search1( "tw" , "1"  , pageable);
 
         log.info(result.getTotalElements());
 
@@ -184,6 +187,37 @@ public class BoardRepositoryTests {
 
     }
 
+
+    @Test
+    public void testListWithRcnt(){
+        List<Object[]> result = boardRepository.getListWitjRcnt();
+
+
+        for(Object[] result2 : result){
+            log.info(Arrays.toString(result2));
+        }
+
+    }
+
+    @Test
+    public void testListWithRcntSearch(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        // Page<Board> result =  boardRepository.search1( "tw" , "1"  , pageable);
+
+        boardRepository.searchWithRcnt( "tcw", "1", pageable);
+    }
+
+
+    @Test
+    public void test0706_1(){
+
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+
+        PageResponseDTO<BoardListRcntDTO> pageResponseDTO = boardRepository.searchDTORcnt(pageRequestDTO);
+
+        log.info(pageResponseDTO);
+
+    }
 
 
 
