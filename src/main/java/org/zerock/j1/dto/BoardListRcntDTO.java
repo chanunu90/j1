@@ -13,9 +13,9 @@ import lombok.ToString;
 @ToString
 public class BoardListRcntDTO {
 
-    private Long bno;
-    private String title;
-    private String writer;
-    private Long replyCount;
-
+  private Long bno;
+  private String title;
+  private String writer;
+  private long replyCount;
+  
 }

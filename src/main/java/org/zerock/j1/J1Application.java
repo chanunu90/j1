@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-// @CrossOrigin(origins = "http://localhost:8080/api/todos/**")
 @EnableJpaAuditing
 public class J1Application {
 

@@ -6,21 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
-public class ReplyPageRequestDTO extends PageRequestDTO{
+public class ReplyPageRequestDTO extends PageRequestDTO {
 
-    private Long bno;
+  private Long bno;
 
-    @Builder.Default
-    private int page = 1;
-    @Builder.Default
-    private int size = 50;
-    
-    private boolean last;
-       
+  @Builder.Default
+  private int page = 1;
+  @Builder.Default
+  private int size = 50;
+  
+  private boolean last;
+  
 }

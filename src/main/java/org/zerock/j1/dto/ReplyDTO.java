@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class ReplyDTO {
 
-    private Long rno;
-    
-    private String replyText;
+  private Long rno;
 
-    private String replyFile;
+  private String replyText;
 
-    private String replyer;
+  private String replyFile;
 
+  private String replyer;
+  
 }

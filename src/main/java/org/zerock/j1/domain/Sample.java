@@ -17,25 +17,18 @@ import lombok.ToString;
 @ToString
 @Getter
 public class Sample {
-    
 
-    // pk고유키를 주는이유는 고유하게 crud가 가능하게 하기위해서다.
+  @Id
+  private String keyCol;
 
-    @Id
-    private String keyCol;
+  private String first;
+  
+  private String last;
 
-    private String first;
+  private String addr;
 
-    private String last;
+  private String zipCode;
 
-    private String addr;
-
-    private String zipCode;
-
-    private String city;
-
-
-
-    
-
+  private String city;
+  
 }

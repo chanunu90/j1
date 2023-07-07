@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "t_reply")
+@Table(name="t_reply")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,16 +22,17 @@ import lombok.ToString;
 @ToString(exclude = "board")
 public class Reply {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rno;
-    
-    private String replyText;
-    private String replyFile;
-    private String replyer;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long rno;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
+  private String replyText;
 
-    
+  private String replyFile;
+
+  private String replyer;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Board board;
+
 }

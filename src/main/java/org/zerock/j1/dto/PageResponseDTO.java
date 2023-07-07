@@ -3,49 +3,52 @@ package org.zerock.j1.dto;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.springframework.data.domain.PageRequest;
+
 import lombok.Data;
 
 @Data
 public class PageResponseDTO<E> {
+  
+  private List<E> dtoList;
+
+  private long totalCount;
+
+  private List<Integer> pageNums;
+
+  private boolean prev, next;
+
+  private PageRequestDTO requestDTO;
+
+  private int page,size, start, end;
+
+  public PageResponseDTO(List<E> dtoList, long totalCount, PageRequestDTO pageRequestDTO){
     
-    private List<E> dtoList;
+    this.dtoList = dtoList;
+    this.totalCount = totalCount;
+    this.requestDTO = pageRequestDTO;
 
-    private long totalCount;
+    this.page = pageRequestDTO.getPage();
+    this.size = pageRequestDTO.getSize();
 
-    private List<Integer> pageNums;
+    //13 -> 1.3 -> 2.0
+    int tempEnd = (int) (Math.ceil(page/10.0) * 10);
 
-    private boolean prev, next;
+    this.start = tempEnd - 9;
+    this.prev = this.start != 1;
 
-    // PageRequestDTO 파일 생성 후 
-    private PageRequestDTO requestDTO;
+    //20  17.8
+    int realEnd = (int) (Math.ceil(totalCount/(double)size));
 
-    // 페이지 계산
-    private int page,size, start, end;
+    this.end = tempEnd > realEnd ? realEnd: tempEnd;
 
-    public PageResponseDTO(List<E> dtoList, long totalCount, PageRequestDTO pageRequestDTO){
-        
-        this.dtoList = dtoList;
-        this.totalCount = totalCount;
-        this.requestDTO = pageRequestDTO;
+    this.next = (this.end * this.size) < totalCount;
 
-        //페이지 계산
-        this.page = pageRequestDTO.getPage();
-        this.size = pageRequestDTO.getSize();
+    this.pageNums = IntStream.rangeClosed(start, end).boxed().toList();
 
-        // 13  -> 1.3 -> 2.0
-        int tempEnd = (int) (Math.ceil(page/10.0) * 10);
 
-        this.start = tempEnd - 9;
-        this.prev = this.start != 1;
+  }
 
-        // 20  17.8 
-        int realEnd = (int) (Math.ceil(totalCount/(double)size));
 
-        this.end = tempEnd > realEnd ? realEnd : tempEnd;
-        // (true)         200              201
-        this.next = (this.end * size) < totalCount;
-
-        this.pageNums = IntStream.rangeClosed(start, end).boxed().toList();
-
-    }
+  
 }

@@ -1,8 +1,9 @@
 package org.zerock.j1.repository;
 
-
 import java.util.Optional;
-import java.util.stream.LongStream;
+import java.util.stream.IntStream;
+
+import javax.management.modelmbean.ModelMBean;
 
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -20,59 +21,62 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootTest
 @Log4j2
 public class TodoRepositoryTests {
+  
+  @Autowired
+  private TodoRepository todoRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-    
-    @Autowired
-    private TodoRepository todoRepository;
+  @Autowired
+  private ModelMapper modelMapper;
 
-    @Test // id가 없으면 무조건 insert다 라고 생각한다. 
-    public void testInsert(){
+  @Test
+  public void testRead() {
 
-        LongStream.rangeClosed(1, 100).forEach(i->{
+    Long tno  = 100L;
 
-            Todo todo = Todo.builder().title("Title" + i).build();
+    Optional<Todo> result = todoRepository.findById(tno);
 
-            Todo result = todoRepository.save(todo);
+    Todo entity = result.orElseThrow();
 
-            log.info(result);
+    log.info("ENTITY---------------");
+    log.info(entity);
 
-        });
+    TodoDTO dto = modelMapper.map(entity, TodoDTO.class);
 
+    log.info(dto);
 
+  }
 
-    }
+  @Test
+  public void testInsert() {
 
-    @Test 
-    public void testPageing(){
+    IntStream.rangeClosed(1, 100).forEach(i -> {
 
-        Pageable pageable = PageRequest.of(0, 110, Sort.by("tno").descending());
+      Todo todo = Todo.builder().title("Title"+i).build();
 
-        Page<Todo> result  = todoRepository.findAll(pageable);
+      Todo result = todoRepository.save(todo);
 
-        log.info(result);
+      log.info(result);
 
-    }
+    });
 
-    @Test
-    public void testRead(){
-        Long tno = 100L;
+  }
 
-        Optional<Todo> result = todoRepository.findById(tno);
+  @Test
+  public void testPaging() {
 
-        Todo entity = result.orElseThrow();
+    Pageable pageable = 
+      PageRequest.of(0, 10, Sort.by("tno").descending());
 
-        log.info("Entity.........................");
-        log.info(entity);
+    Page<Todo> result = todoRepository.findAll(pageable);  
 
+    log.info(result);
 
-        // 왼쪽에 있는 엔티티를 => 해당 dto로 변경된다.
-        TodoDTO dto = modelMapper.map(entity , TodoDTO.class);
-        log.info(dto);
-        
-    }
-
-
+  }
 
 }
+
+
+
+
+
+

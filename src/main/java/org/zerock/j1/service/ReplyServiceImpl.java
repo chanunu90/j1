@@ -40,7 +40,7 @@ public class ReplyServiceImpl implements ReplyService{
         pageNum = (int)(Math.ceil(totalCount/(double)requestDTO.getSize()));
     }
 
-    Pageable pageable = PageRequest.of(pageNum -1 <=0? 0:pageNum-1, requestDTO.getSize(), Sort.by("rno").ascending() );
+    Pageable pageable = PageRequest.of(pageNum -1 , requestDTO.getSize(), Sort.by("rno").ascending() );
 
     Page<Reply> result = replyRepository.listBoard(requestDTO.getBno(), pageable);
 
@@ -54,7 +54,6 @@ public class ReplyServiceImpl implements ReplyService{
 
     PageResponseDTO<ReplyDTO> responseDTO = new PageResponseDTO<>(dtoList, totalReplyCount, requestDTO);
     responseDTO.setPage(pageNum);
-    log.info(requestDTO);
 
     return responseDTO;
   }

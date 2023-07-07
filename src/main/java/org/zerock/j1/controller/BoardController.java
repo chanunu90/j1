@@ -1,6 +1,7 @@
 package org.zerock.j1.controller;
 
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,31 +18,27 @@ import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/api/board")
-@Log4j2
 @RequiredArgsConstructor
+@Log4j2
 @CrossOrigin
 public class BoardController {
-    
-    private final BoardService boardService;
+  
+  private final BoardService boardService;
 
-    @GetMapping("/list" )
-    public PageResponseDTO<BoardListRcntDTO> list(@ParameterObject PageRequestDTO pageRequestDTO){
+  @GetMapping(value ="/list")
+  public PageResponseDTO<BoardListRcntDTO> list(
+    @ParameterObject PageRequestDTO requestDTO){
 
-        log.info(pageRequestDTO);
+    log.info(requestDTO);
 
+    return boardService.listRcnt(requestDTO);
 
-        return boardService.listRcnt(pageRequestDTO);
+  }
 
-    }
+  @GetMapping("/{bno}")
+  public BoardDTO get(@PathVariable("bno") Long bno){
 
-
-
-    @GetMapping("/{bno}")
-    public BoardDTO get(@PathVariable("bno") Long bno){
-
-        return boardService.getOne(bno);
-    }
-
-
-
+    return boardService.getOne(bno);
+  }
+  
 }
