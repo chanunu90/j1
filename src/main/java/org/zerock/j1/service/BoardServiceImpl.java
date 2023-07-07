@@ -10,7 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.zerock.j1.domain.Board;
 import org.zerock.j1.domain.Todo;
+import org.zerock.j1.dto.BoardDTO;
 import org.zerock.j1.dto.BoardListRcntDTO;
 import org.zerock.j1.dto.PageRequestDTO;
 import org.zerock.j1.dto.PageResponseDTO;
@@ -36,6 +38,20 @@ public class BoardServiceImpl implements BoardService {
         log.info(pageRequestDTO);
 
         return boardRepository.searchDTORcnt(pageRequestDTO);
+    }
+
+
+    @Override
+    public BoardDTO getOne(Long bno) {
+
+        Optional<Board> result = boardRepository.findById(bno);
+
+        Board board = result.orElseThrow();
+
+        BoardDTO dto = modelMapperl.map(board, BoardDTO.class);
+
+        return dto;
+
     }
 
 

@@ -15,8 +15,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Commit;
 import org.zerock.j1.domain.Board;
 import org.zerock.j1.dto.BoardListRcntDTO;
+import org.zerock.j1.dto.BoardReadDTO;
 import org.zerock.j1.dto.PageRequestDTO;
 import org.zerock.j1.dto.PageResponseDTO;
+import org.zerock.j1.dto.ReplyPageRequestDTO;
+import org.zerock.j1.service.ReplyService;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +30,7 @@ public class BoardRepositoryTests {
     
     @Autowired
     private BoardRepository boardRepository;
+
 
 
     @Test
@@ -218,6 +222,23 @@ public class BoardRepositoryTests {
         log.info(pageResponseDTO);
 
     }
+
+
+    @Test
+    public void testReadOne(){
+        Long bno = 84L;
+
+        BoardReadDTO dto = boardRepository.readOne(bno);
+
+        log.info(dto);
+        log.info(dto.getModDate());
+        log.info(dto.getRegDate());
+        log.info(dto.getClass().getName());
+        // log.info(dto.getClass().getName());
+        
+    }
+
+
 
 
 

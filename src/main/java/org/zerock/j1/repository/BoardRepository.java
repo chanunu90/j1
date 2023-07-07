@@ -9,9 +9,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.zerock.j1.domain.Board;
+import org.zerock.j1.dto.BoardReadDTO;
 import org.zerock.j1.repository.search.BoardSearch;
 // repository생성
 public interface BoardRepository  extends JpaRepository<Board,Long> , BoardSearch{
+
+
+    @Query("select b from Board b where b.bno = :bno")
+    BoardReadDTO readOne(@Param("bno") Long bno);
+
+
     // repository에 메소드명을 넣으면
     // 자동으로 쿼리 메소드를 만들어낸다.
     // 생각보다 사용되진 않는다 why? 복잡한 쿼리 문을 생성을 하기 힘들기떄문.

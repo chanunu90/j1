@@ -23,16 +23,13 @@ public interface BoardSearch {
     //어디서든 쓸수있는 페이지
     default Pageable makePageable(PageRequestDTO requestDTO){
 
-        Pageable pageable = PageRequest.of( 
+        Pageable pageable = PageRequest.of(
         requestDTO.getPage() -1,
         requestDTO.getSize(),
-        Sort.by("bno").descending()  );
+        Sort.by("bno").descending());
 
         return pageable;
 
-
     }
-    
-
     
 }
